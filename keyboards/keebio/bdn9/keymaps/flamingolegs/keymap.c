@@ -105,14 +105,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         case OPEN_RAMBOX:
             tap_code16(G(KC_SPC));
-            wait_ms(100);
+            wait_ms(250);
+            tap_code16(G(KC_A));
+            tap_code(KC_BSPC);
+            wait_ms(80);
             SEND_STRING("Rambox");
+            wait_ms(120);
             tap_code(KC_ENT);
             return false;
         case OPEN_OUTLOOK:
             tap_code16(G(KC_SPC));
-            wait_ms(100);
+            wait_ms(250);
+            tap_code16(G(KC_A));
+            tap_code(KC_BSPC);
+            wait_ms(80);
             SEND_STRING("Outlook");
+            wait_ms(120);
             tap_code(KC_ENT);
             return false;
         default:
