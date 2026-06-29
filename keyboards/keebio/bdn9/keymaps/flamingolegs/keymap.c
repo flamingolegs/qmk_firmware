@@ -31,6 +31,23 @@ enum custom_keycodes {
 
 static bool middle_horizontal_scroll = false;
 
+static void launch_spotlight_app(const char *app_name) {
+    // Close any active search UI first, then open Spotlight once.
+    tap_code(KC_ESC);
+    wait_ms(40);
+
+    tap_code16(G(KC_SPC));
+    wait_ms(300);
+
+    // Clear any leftover Spotlight query without extra GUI chords.
+    tap_code(KC_BSPC);
+    wait_ms(80);
+
+    send_string(app_name);
+    wait_ms(120);
+    tap_code(KC_ENT);
+}
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*
         | Knob 1: Vol Dn/Up |      | Knob 2: Page Dn/Up |
@@ -104,24 +121,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             tap_code16(C(A(KC_SPC)));
             return false;
         case OPEN_RAMBOX:
-            tap_code16(G(KC_SPC));
-            wait_ms(250);
-            tap_code16(G(KC_A));
-            tap_code(KC_BSPC);
-            wait_ms(80);
-            SEND_STRING("Rambox");
-            wait_ms(120);
-            tap_code(KC_ENT);
+            launch_spotlight_app("Rambox");
             return false;
         case OPEN_OUTLOOK:
-            tap_code16(G(KC_SPC));
-            wait_ms(250);
-            tap_code16(G(KC_A));
-            tap_code(KC_BSPC);
-            wait_ms(80);
-            SEND_STRING("Outlook");
-            wait_ms(120);
-            tap_code(KC_ENT);
+            launch_spotlight_app("Outlook");
             return false;
         default:
             return true;
